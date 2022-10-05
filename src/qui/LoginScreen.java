@@ -5,6 +5,7 @@
  */
 package qui;
 
+import database.DbConnection;
 import java.awt.Color;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
@@ -23,6 +24,7 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
     public LoginScreen() {
         initComponents();
         getEdits();
+        new DbConnection();
     }
 
     @Override

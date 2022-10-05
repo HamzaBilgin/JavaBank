@@ -5,10 +5,13 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.UserApplication;
 import java.awt.Color;
-import javax.swing.JOptionPane;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -16,15 +19,14 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
+public class RegisterScreen extends javax.swing.JFrame implements IRegulator, IInfoController {
 
-    /**
-     * Creates new form RegisterScreen
-     */
+    private UserApplication userAppObject = null;
+
     public RegisterScreen() {
         initComponents();
         getEdits();
-        
+
     }
 
     @Override
@@ -36,10 +38,26 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
         TextSetting.setOnlyNumber(phoneNumberText);
         TextSetting.setMaxLimit(idNoText, 11);
         TextSetting.setMaxLimit(phoneNumberText, 11);
-        
+
     }
 
-    
+    public UserApplication getUserAppObject() {
+        if (this.userAppObject == null) {
+            userAppObject = new UserApplication();
+        }
+        return userAppObject;
+    }
+
+    @Override
+    public boolean validInformation() {
+        return TextSetting.fiilingTextFields(registerPanel);
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -132,37 +150,39 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
         registerPanelLayout.setHorizontalGroup(
             registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(registerPanelLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(registerPanelLayout.createSequentialGroup()
+                        .addGap(412, 412, 412)
+                        .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(registerPanelLayout.createSequentialGroup()
+                        .addGap(62, 62, 62)
                         .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(answerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(registerPanelLayout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(answerText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(phoneNumberText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(registerPanelLayout.createSequentialGroup()
+                                .addComponent(idNoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(idNoText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(registerPanelLayout.createSequentialGroup()
+                                .addComponent(nameSurnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nameSurnameText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(personalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(securityInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(registerPanelLayout.createSequentialGroup()
+                                .addComponent(securityQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(securityQustionCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(registerPanelLayout.createSequentialGroup()
+                                .addComponent(answerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(answerText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(registerPanelLayout.createSequentialGroup()
-                        .addComponent(phoneNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(phoneNumberText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(registerPanelLayout.createSequentialGroup()
-                        .addComponent(idNoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(idNoText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(registerPanelLayout.createSequentialGroup()
-                        .addComponent(nameSurnameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(nameSurnameText, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(personalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(securityInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(registerPanelLayout.createSequentialGroup()
-                        .addComponent(securityQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(securityQustionCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         registerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {answerText, securityQustionCheckBox});
@@ -172,7 +192,9 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
         registerPanelLayout.setVerticalGroup(
             registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(registerPanelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(personalInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -196,11 +218,9 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(answerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(answerText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(registerButton)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(registerButton)
+                .addGap(47, 47, 47))
         );
 
         registerPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {answerText, backButton, registerButton, securityQustionCheckBox});
@@ -220,17 +240,58 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
     }// </editor-fold>//GEN-END:initComponents
 
     private void registerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseEntered
-       ButtonSetting.setBgFg(registerButton, Color.cyan, Color.red);        
+        ButtonSetting.setBgFg(registerButton, Color.cyan, Color.red);
     }//GEN-LAST:event_registerButtonMouseEntered
 
     private void registerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseExited
-       ButtonSetting.setOriginalBgFg(registerButton);
+        ButtonSetting.setOriginalBgFg(registerButton);
     }//GEN-LAST:event_registerButtonMouseExited
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-       JOptionPane.showMessageDialog(this, "Application Successful");
-        ActionSetting.setVisible(this, new LoginScreen());
+        if (this.validInformation()) {
+            this.makeApplication();
+        } else {
+            Dialogs.notEmptyMessageShow(this);
+        }
+
     }//GEN-LAST:event_registerButtonActionPerformed
+    private void makeApplication() {
+        //Personal Info
+        this.getUserAppObject().setNameSurname(this.nameSurnameText.getText().trim());
+        this.getUserAppObject().setIdNo(this.idNoText.getText().trim());
+        this.getUserAppObject().setPhoneNo(this.phoneNumberText.getText().trim());
+        //Sequrity Info
+        this.getUserAppObject().setSequrityQuestion(String.valueOf(this.securityQustionCheckBox.getSelectedItem()));
+        this.getUserAppObject().setSeqrityAnswer(this.answerText.getText().trim());
+        //information to be given by the system
+        this.getUserAppObject().setAccountNo(this.randomAccountNo());
+        this.getUserAppObject().setPassword(this.randomPassword());
+        
+        if(this.getUserAppObject().isApplicationApproved()){
+             Dialogs.privateMessageShow(this, "Application Successful\n"
+                     + "Account Number : " + this.getUserAppObject().getAccountNo()
+                     +"\nPassword : " + this.getUserAppObject().getPassword());
+        ActionSetting.setVisible(this, new LoginScreen());
+        } else {
+            Dialogs.privateMessageShow(this, "Application is Failed\n"
+                    + "Please check your information !");
+        }
+        
+    }
+    private String randomAccountNo(){
+        String accountNoo;
+        do{
+        accountNoo = String.valueOf(100000+(int)(Math.random()*9000000));
+        }while(this.getUserAppObject().isThereAccountNumberOnTheTable());
+        return accountNoo;
+    }
+        
+    private String randomPassword(){
+        String password;
+        password = String.valueOf((1000+(int)(Math.random()*9000)));
+        return password;
+    }
+
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         ActionSetting.setVisible(this, new LoginScreen());

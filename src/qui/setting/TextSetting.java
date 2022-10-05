@@ -1,8 +1,10 @@
 package qui.setting;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -61,7 +63,7 @@ public class TextSetting {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isAlphabetic(c)) {
+                if (!Character.isAlphabetic(c) && c != KeyEvent.VK_SPACE) {
                     e.consume();
                 }
             }
@@ -89,6 +91,9 @@ public class TextSetting {
 
         });
     }
+    public static boolean lengthIsItLessThan(int length,String str) {
+        return (str.length() < length);
+    }
 
     /*
     Money setting
@@ -105,5 +110,19 @@ public class TextSetting {
         }
         return 0;
     }
-
+    /*
+    Text fields Control
+    */
+    public static boolean fiilingTextFields(JPanel panel){
+        Component[] components = panel.getComponents();
+        for(Component c : components){
+            if(c instanceof JTextField){
+                JTextField tf = (JTextField) c;
+                if(tf.getText().trim().equals("")&&tf.isEnabled())
+                    return false;
+            }
+        }
+        return true;
+           
+    }
 }
