@@ -49,9 +49,10 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
         passwordText = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
+        messageForgetPasswordLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Java Atm Login Screen");
+        setTitle("JAVA BANK LOGIN SCREEN");
 
         LoginScreenPanel.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -117,16 +118,19 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
             }
         });
 
+        messageForgetPasswordLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        messageForgetPasswordLabel.setForeground(new java.awt.Color(255, 0, 51));
+        messageForgetPasswordLabel.setText("Did you forget your password ?");
+        messageForgetPasswordLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                messageForgetPasswordLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout LoginScreenPanelLayout = new javax.swing.GroupLayout(LoginScreenPanel);
         LoginScreenPanel.setLayout(LoginScreenPanelLayout);
         LoginScreenPanelLayout.setHorizontalGroup(
             LoginScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LoginScreenPanelLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(registerButton)
-                .addGap(130, 130, 130)
-                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 134, Short.MAX_VALUE))
             .addGroup(LoginScreenPanelLayout.createSequentialGroup()
                 .addGroup(LoginScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LoginScreenPanelLayout.createSequentialGroup()
@@ -137,7 +141,18 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
                         .addGroup(LoginScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
+            .addGroup(LoginScreenPanelLayout.createSequentialGroup()
+                .addGroup(LoginScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginScreenPanelLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(registerButton)
+                        .addGap(130, 130, 130)
+                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(LoginScreenPanelLayout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(messageForgetPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         LoginScreenPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {passwordText, userText});
@@ -157,7 +172,9 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
                 .addGroup(LoginScreenPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(registerButton))
-                .addGap(127, 127, 127))
+                .addGap(31, 31, 31)
+                .addComponent(messageForgetPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
         );
 
         LoginScreenPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {loginButton, passwordText, registerButton, userText});
@@ -231,6 +248,12 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
         ActionSetting.setVisible(this, new RegisterScreen());
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    private void messageForgetPasswordLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_messageForgetPasswordLabelMouseClicked
+       PasswordResetScreen p_r_s = new PasswordResetScreen();
+       ActionSetting.setVisible(this,p_r_s);
+       p_r_s.getOldPasswordText().setEnabled(false);
+    }//GEN-LAST:event_messageForgetPasswordLabelMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -269,6 +292,7 @@ public final class LoginScreen extends javax.swing.JFrame implements IRegulator 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginScreenPanel;
     private javax.swing.JButton loginButton;
+    private javax.swing.JLabel messageForgetPasswordLabel;
     private javax.swing.JPasswordField passwordText;
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField userText;

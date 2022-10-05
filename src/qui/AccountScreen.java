@@ -104,6 +104,11 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
                 cashDepositButtonMouseExited(evt);
             }
         });
+        cashDepositButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashDepositButtonActionPerformed(evt);
+            }
+        });
         accountScreenPanel.add(cashDepositButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 451, 150, 50));
 
         moneyOrderButton.setText("Money Order");
@@ -114,6 +119,11 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 moneyOrderButtonMouseExited(evt);
+            }
+        });
+        moneyOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moneyOrderButtonActionPerformed(evt);
             }
         });
         accountScreenPanel.add(moneyOrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 360, 150, 50));
@@ -128,6 +138,11 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
                 paymentsButtonMouseExited(evt);
             }
         });
+        paymentsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paymentsButtonActionPerformed(evt);
+            }
+        });
         accountScreenPanel.add(paymentsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 451, 150, 50));
 
         settingButton.setText("Setting");
@@ -140,6 +155,11 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
                 settingButtonMouseExited(evt);
             }
         });
+        settingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingButtonActionPerformed(evt);
+            }
+        });
         accountScreenPanel.add(settingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 100, 40));
 
         logOutButton.setText("Log Out");
@@ -150,6 +170,11 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 logOutButtonMouseExited(evt);
+            }
+        });
+        logOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutButtonActionPerformed(evt);
             }
         });
         accountScreenPanel.add(logOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, 100, 40));
@@ -210,6 +235,26 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
     private void drawCashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drawCashButtonActionPerformed
         ActionSetting.setVisible(this, new DrawCashScreen());
     }//GEN-LAST:event_drawCashButtonActionPerformed
+
+    private void cashDepositButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashDepositButtonActionPerformed
+       ActionSetting.setVisible(this, new CashDepositScreen());
+    }//GEN-LAST:event_cashDepositButtonActionPerformed
+
+    private void moneyOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moneyOrderButtonActionPerformed
+        ActionSetting.setVisible(this, new MoneyOrderScreen());
+    }//GEN-LAST:event_moneyOrderButtonActionPerformed
+
+    private void paymentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentsButtonActionPerformed
+        ActionSetting.setVisible(this, new PaymentScreen());
+    }//GEN-LAST:event_paymentsButtonActionPerformed
+
+    private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
+       ActionSetting.setVisible(this, new LoginScreen());
+    }//GEN-LAST:event_logOutButtonActionPerformed
+
+    private void settingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingButtonActionPerformed
+        ActionSetting.setVisible(this, new SettingScreen());
+    }//GEN-LAST:event_settingButtonActionPerformed
     private void setBgFg(Component c){
         ButtonSetting.setBgFg((JButton)c, Color.CYAN, Color.blue);
     }

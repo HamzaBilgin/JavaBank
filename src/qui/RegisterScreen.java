@@ -58,7 +58,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
         answerText = new javax.swing.JTextField();
         answerLabel = new javax.swing.JLabel();
         registerButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JAVA BANK REGISTER SCREEN");
@@ -120,10 +120,10 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
             }
         });
 
-        exitButton.setText("EXIT");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -139,7 +139,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
                             .addComponent(answerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(registerPanelLayout.createSequentialGroup()
                                 .addGap(55, 55, 55)
-                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,7 +167,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
 
         registerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {answerText, securityQustionCheckBox});
 
-        registerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {exitButton, registerButton});
+        registerPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {backButton, registerButton});
 
         registerPanelLayout.setVerticalGroup(
             registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,11 +199,11 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
                 .addGap(39, 39, 39)
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registerButton)
-                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
-        registerPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {answerText, exitButton, registerButton, securityQustionCheckBox});
+        registerPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {answerText, backButton, registerButton, securityQustionCheckBox});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,9 +232,9 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
         ActionSetting.setVisible(this, new LoginScreen());
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         ActionSetting.setVisible(this, new LoginScreen());
-    }//GEN-LAST:event_exitButtonActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,7 +274,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel answerLabel;
     private javax.swing.JTextField answerText;
-    private javax.swing.JButton exitButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel idNoLabel;
     private javax.swing.JTextField idNoText;
     private javax.swing.JLabel nameSurnameLabel;

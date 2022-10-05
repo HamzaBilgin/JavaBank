@@ -16,12 +16,13 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
+public class DrawCashScreen extends javax.swing.JFrame implements IRegulator {
 
     /**
      * Creates new form DrawCashScreen
      */
-    private int amount = 0;
+    private int drawCashAmount = 0;
+    
     public DrawCashScreen() {
         initComponents();
         getEdits();
@@ -29,11 +30,14 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
 
     @Override
     public void getEdits() {
-       this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.setFocusable(true);
-        TextSetting.setOnlyNumber(amountText);
+        TextSetting.setOnlyNumber(drawCashAmountText);
+        TextSetting.setMaxLimit(drawCashAmountText, 4);
+        
+        
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,14 +53,16 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
         balanceLabel = new javax.swing.JLabel();
         balanceLabel2 = new javax.swing.JLabel();
         amountLabel = new javax.swing.JLabel();
-        amountText = new javax.swing.JTextField();
+        drawCashAmountText = new javax.swing.JTextField();
         drawCashButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("JAVA BANK DRAW CASH SCREEN");
 
         drawCashPanel.setBackground(new java.awt.Color(153, 255, 102));
 
+        userNameSurname.setBackground(new java.awt.Color(204, 204, 255));
         userNameSurname.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         userNameSurname.setForeground(new java.awt.Color(255, 0, 0));
         userNameSurname.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -64,7 +70,7 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
 
         limitLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         limitLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        limitLabel.setText(" You can withdraw 5000 TL at once");
+        limitLabel.setText(" You can withdraw maksimum 5000 TL at once");
 
         balanceLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         balanceLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -77,9 +83,9 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
         amountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         amountLabel.setText("Amount :");
 
-        amountText.addKeyListener(new java.awt.event.KeyAdapter() {
+        drawCashAmountText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                amountTextKeyReleased(evt);
+                drawCashAmountTextKeyReleased(evt);
             }
         });
 
@@ -141,14 +147,14 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
                         .addGap(49, 49, 49)
                         .addComponent(amountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(amountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(drawCashAmountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(drawCashPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        drawCashPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {amountText, balanceLabel2, limitLabel});
+        drawCashPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {balanceLabel2, drawCashAmountText, limitLabel});
 
         drawCashPanelLayout.setVerticalGroup(
             drawCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,13 +172,13 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
                 .addGap(28, 28, 28)
                 .addGroup(drawCashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(amountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(amountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(drawCashAmountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(drawCashButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
-        drawCashPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amountLabel, amountText, balanceLabel, balanceLabel2, limitLabel});
+        drawCashPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amountLabel, balanceLabel, balanceLabel2, drawCashAmountText, limitLabel});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,11 +195,11 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
-      ButtonSetting.setBgFg(backButton, Color.CYAN, Color.blue);
+        ButtonSetting.setBgFg(backButton, Color.CYAN, Color.blue);
     }//GEN-LAST:event_backButtonMouseEntered
 
     private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
-       ButtonSetting.setOriginalBgFg(backButton);
+        ButtonSetting.setOriginalBgFg(backButton);
     }//GEN-LAST:event_backButtonMouseExited
 
     private void drawCashButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawCashButtonMouseEntered
@@ -208,14 +214,14 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
         ActionSetting.setVisible(this, new AccountScreen());
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void amountTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_amountTextKeyReleased
-        this.amount =TextSetting.checkTheTextKeyReleased(amountText, 5000);
-        
-    }//GEN-LAST:event_amountTextKeyReleased
+    private void drawCashAmountTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_drawCashAmountTextKeyReleased
+        this.drawCashAmount = TextSetting.checkTheTextKeyReleased(drawCashAmountText, 5000);
+
+    }//GEN-LAST:event_drawCashAmountTextKeyReleased
 
     private void drawCashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drawCashButtonActionPerformed
-       JOptionPane.showMessageDialog(this, "Successfull\n" + " Amount : " + this.amount + "TL");
-       ActionSetting.setVisible(this, new AccountScreen());
+        JOptionPane.showMessageDialog(this, "Successfull\n" + " Amount : " + this.drawCashAmount + " TL");
+        ActionSetting.setVisible(this, new AccountScreen());
     }//GEN-LAST:event_drawCashButtonActionPerformed
 
     /**
@@ -255,10 +261,10 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel amountLabel;
-    private javax.swing.JTextField amountText;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JLabel balanceLabel2;
+    private javax.swing.JTextField drawCashAmountText;
     private javax.swing.JButton drawCashButton;
     private javax.swing.JPanel drawCashPanel;
     private javax.swing.JLabel limitLabel;
