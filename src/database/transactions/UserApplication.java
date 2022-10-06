@@ -1,4 +1,3 @@
-
 package database.transactions;
 
 import database.DbConnection;
@@ -9,57 +8,57 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import qui.setting.TextSetting;
 
+public class UserApplication extends DbConnection implements IInfoController {
 
-public class UserApplication extends DbConnection implements IInfoController{
     // Application Info
-    private String nameSurname = null,idNo = null, phoneNo = null;
+    private String nameSurname = null, idNo = null, phoneNo = null;
     private String sequrityQuestion = null, seqrityAnswer = null;
-    
+
     //Information to be given by the system
-    private String accountNo = null; 
+    private String accountNo = null;
     private String password = null;
-    
-    public boolean isApplicationApproved(){
-        if(this.validInformation()){
-            if(this.istheIDintheTable()){
+
+    public boolean isApplicationApproved() {
+        if (this.validInformation()) {
+            if (this.istheIDintheTable()) {
                 return false;
             } else {
                 this.confirmApplication();
                 return true;
             }
-            
+
         } else {
             return false;
         }
     }
-    
-    private boolean istheIDintheTable(){
-        String query = "SELECT tc_no FROM kullanicilar WHERE tc_no = '"+ this.idNo + "'";
+
+    private boolean istheIDintheTable() {
+        String query = "SELECT tc_no FROM kullanicilar WHERE tc_no = '" + this.idNo + "'";
         try {
             super.statement = super.connection.createStatement();
-            ResultSet rs =statement.executeQuery(query);
-            while(rs.next()){
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserApplication.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
-    private void confirmApplication(){
+
+    private void confirmApplication() {
         String query = "INSERT INTO kullanicilar(musteri_no,sifre,"
-                + "ad_soyad,tc_no,tel_no,güvenlik_sorusu,güvenlik_cevap)"
+                + "ad_soyad,tc_no,tel_no,guvenlik_sorusu,guvenlik_cevap)"
                 + "VALUES ("
-                + "'" +this.accountNo +"',"
-                + "'" +this.password +"',"
-                + "'" +this.nameSurname +"',"
-                + "'" +this.idNo +"',"
-                + "'" +this.phoneNo +"',"
-                + "'" +this.sequrityQuestion +"',"
-                + "'" +this.seqrityAnswer +"'"
+                + "'" + this.accountNo + "',"
+                + "'" + this.password + "',"
+                + "'" + this.nameSurname + "',"
+                + "'" + this.idNo + "',"
+                + "'" + this.phoneNo + "',"
+                + "'" + this.sequrityQuestion + "',"
+                + "'" + this.seqrityAnswer + "'"
                 + ")";
-        
         
         try {
             super.statement = super.connection.createStatement();
@@ -67,14 +66,15 @@ public class UserApplication extends DbConnection implements IInfoController{
         } catch (SQLException ex) {
             Logger.getLogger(UserApplication.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
+
     }
-    public boolean isThereAccountNumberOnTheTable(){
+
+    public boolean isThereAccountNumberOnTheTable() {
         String query = "SELECT musteri_no FROM kullanicilar WHERE musteri_no = '" + this.accountNo + "'";
         try {
             super.statement = super.connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-            while(rs.next()) {
+            while (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {
@@ -82,18 +82,19 @@ public class UserApplication extends DbConnection implements IInfoController{
         }
         return false;
     }
+
     @Override
     public boolean validInformation() {
-        return !(this.nameSurname ==null
-                ||this.idNo == null
-                ||this.phoneNo == null
-                ||this.seqrityAnswer==null
-                ||this.sequrityQuestion==null
-                ||this.accountNo == null
-                ||this.password == null)
-                ||TextSetting.lengthIsItLessThan(11,this.idNo)
-                ||TextSetting.lengthIsItLessThan(11,this.phoneNo);
-                
+        return !(this.nameSurname == null
+                || this.idNo == null
+                || this.phoneNo == null
+                || this.seqrityAnswer == null
+                || this.sequrityQuestion == null
+                || this.accountNo == null
+                || this.password == null
+                || TextSetting.lengthIsItLessThan(11, this.idNo)
+                || TextSetting.lengthIsItLessThan(11, this.phoneNo));
+
     }
 
     @Override
@@ -156,6 +157,5 @@ public class UserApplication extends DbConnection implements IInfoController{
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
+
 }

@@ -55,7 +55,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator, II
 
     @Override
     public AccountInformation getAccountInformation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return AccountInformation.getInstance();
     }
 
     @SuppressWarnings("unchecked")
@@ -112,7 +112,7 @@ public class RegisterScreen extends javax.swing.JFrame implements IRegulator, II
         securityQuestion.setText("Security Question :");
 
         securityQustionCheckBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        securityQustionCheckBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is your pet's name?", "What is your favorite object?", "What is the surname of your primary school teacher?", "Where would you like to live?", "Enter random sentence?(Recomended)" }));
+        securityQustionCheckBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is your name of pet?", "What is your favorite object?", "What is the surname of your primary school teacher?", "Where would you like to live?", "Enter random sentence?(Recomended)" }));
 
         phoneNumberText.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 

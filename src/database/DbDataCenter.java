@@ -1,6 +1,8 @@
 
 package database;
 
+import java.text.DecimalFormat;
+
 
 public class DbDataCenter extends DbConnection{
     protected int userId = 0;
@@ -53,7 +55,8 @@ public class DbDataCenter extends DbConnection{
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        double b = Double.valueOf(new DecimalFormat("##.##").format(balance).replaceAll(",", "."));
+        this.balance = b;
     }
 
     public double getElectricityBill() {

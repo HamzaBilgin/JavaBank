@@ -5,11 +5,15 @@
  */
 package qui;
 
+import database.transactions.PasswordReset;
+import database.IInfoController;
+import database.transactions.AccountInformation;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -17,11 +21,12 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class PasswordResetScreen extends javax.swing.JFrame implements IRegulator{
+public class PasswordResetScreen extends javax.swing.JFrame implements IRegulator,IInfoController{
 
     /**
      * Creates new form PasswordResetScreen
      */
+    private PasswordReset paswordResetObject = null;
     public PasswordResetScreen() {
         initComponents();
         getEdits();
@@ -30,19 +35,42 @@ public class PasswordResetScreen extends javax.swing.JFrame implements IRegulato
     @Override
     public void getEdits() {
        this.setLocationRelativeTo(null);
+       this.setResizable(false);
+       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setFocusable(true);
         TextSetting.setOnlyNumber(idNoText);
         TextSetting.setOnlyNumber(phoneNumberText);
         TextSetting.setMaxLimit(idNoText, 11);
         TextSetting.setMaxLimit(phoneNumberText, 11);
+        if(getAccountInformation().getUserId() == 0) {
+            this.oldPasswordText.setEnabled(false);
+        }
     }
 
+    
     public JPasswordField getOldPasswordText() {
         return oldPasswordText;
     }
     private boolean isEnableOldPasswordText(){
         return this.getOldPasswordText().isEnabled();
         
+    }
+
+    @Override
+    public boolean validInformation() {
+        return TextSetting.fiilingTextFields(this.passwordScreenPanel);
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+       return AccountInformation.getInstance();
+    }
+
+    public PasswordReset getPaswordResetObject() {
+        if(this.paswordResetObject == null) {
+            paswordResetObject = new PasswordReset();
+        }
+        return paswordResetObject;
     }
     
     
@@ -279,14 +307,44 @@ public class PasswordResetScreen extends javax.swing.JFrame implements IRegulato
     }//GEN-LAST:event_resetButtonMouseExited
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "Succesfull");
-        if(isEnableOldPasswordText()){
-        ActionSetting.setVisible(this, new AccountScreen());    
-        }else{
-            ActionSetting.setVisible(this, new LoginScreen());
+        if(this.validInformation()) {
+            this.resetPassword();
+        } else {
+            Dialogs.notEmptyMessageShow(this);
         }
     }//GEN-LAST:event_resetButtonActionPerformed
-
+    private void resetPassword() {
+        String newPass = String.valueOf(this.newPasswordText.getPassword());
+        String reNewPass = String.valueOf(this.newPasswordRepeatText.getPassword());
+        
+        if(newPass.equals(reNewPass)) {
+            this.confirmPassword();
+        } else {
+            Dialogs.privateMessageShow(this, "Passwords do not match!");
+        }
+    }
+    
+    private void confirmPassword() {
+        this.getPaswordResetObject().setIdNo(this.idNoText.getText());
+        this.getPaswordResetObject().setPhoneNo(this.phoneNumberText.getText());
+        this.getPaswordResetObject().setSequrityAnswer(this.secQuestionAnswerText.getText());
+        if(this.isEnableOldPasswordText()) {
+            this.getPaswordResetObject().setOldPassword(String.valueOf(this.oldPasswordText.getPassword()));
+        }
+        this.getPaswordResetObject().setNewPassword(String.valueOf(this.newPasswordText.getPassword()));
+        
+        if(this.getPaswordResetObject().passwordRenewed()) {
+            Dialogs.privateMessageShow(this, "Your password has been successfully reset.");
+            if(this.isEnableOldPasswordText()) {
+                ActionSetting.setVisible(this, new AccountScreen());
+            } else {
+                ActionSetting.setVisible(this, new LoginScreen());
+            }
+        } else {
+            Dialogs.privateMessageShow(this, "Your password could not be reset!\n"
+                    + "Please check your information!");
+        }
+    }
     /**
      * @param args the command line arguments
      */

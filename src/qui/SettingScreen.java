@@ -5,10 +5,14 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.ResetPhoneNumber;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -16,8 +20,11 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class SettingScreen extends javax.swing.JFrame implements IRegulator{
+public class SettingScreen extends javax.swing.JFrame implements IRegulator,IInfoController{
+    
+    private ResetPhoneNumber resetPhoneNumberObject = null;
 
+    private String oldPhoneNumber = null;
     
     public SettingScreen() {
         initComponents();
@@ -28,9 +35,32 @@ public class SettingScreen extends javax.swing.JFrame implements IRegulator{
     @Override
     public void getEdits() {
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setFocusable(true);
         TextSetting.setOnlyNumber(phoneNumberText);
         TextSetting.setMaxLimit(phoneNumberText, 11);
+        this.phoneNumberText.setText(getAccountInformation().getPhoneNo());
+        this.oldPhoneNumber = phoneNumberText.getText();
+        this.userNameSurname.setText("Sayın " + getAccountInformation().getUserId());
+    }
+
+    @Override
+    public boolean validInformation() {
+        return !(this.phoneNumberText.getText().equals(""));
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        return AccountInformation.getInstance();
+    }
+
+    public ResetPhoneNumber getResetPhoneNumberObject() {
+        if (this.resetPhoneNumberObject == null) {
+            resetPhoneNumberObject = new ResetPhoneNumber();
+        }
+       
+        return resetPhoneNumberObject;
     }
     
 
@@ -183,7 +213,7 @@ public class SettingScreen extends javax.swing.JFrame implements IRegulator{
         phoneNumberText.setEnabled(true);
         clickCounter ++;
         }else{
-            JOptionPane.showMessageDialog(this, "Phone Number is Changed");
+            this.reNewPhoneNumber();
             phoneNumberText.setEnabled(false);
             clickCounter = 0;
         }    
@@ -204,7 +234,21 @@ public class SettingScreen extends javax.swing.JFrame implements IRegulator{
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
          ActionSetting.setVisible(this, new AccountScreen());
     }//GEN-LAST:event_backButtonActionPerformed
-
+    private void reNewPhoneNumber() {
+        if (this.validInformation()) {
+            String newPhoneNumber = this.phoneNumberText.getText().trim();
+            getResetPhoneNumberObject().setPhoneNo(newPhoneNumber);
+            if (getResetPhoneNumberObject().telNoRenewed()) {
+                Dialogs.privateMessageShow(this, "Phone number " + newPhoneNumber + " as updated.");
+            } else {
+                Dialogs.privateMessageShow(this, "Failed. Check information!");
+                this.phoneNumberText.setText(this.oldPhoneNumber);
+            }
+        } else {
+            Dialogs.notEmptyMessageShow(this);
+            this.phoneNumberText.setText(this.oldPhoneNumber);
+        }
+    }
     /**
      * @param args the command line arguments
      */

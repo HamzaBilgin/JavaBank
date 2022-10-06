@@ -5,10 +5,14 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.MoneyOrder;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -16,7 +20,8 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class MoneyOrderScreen extends javax.swing.JFrame implements IRegulator{
+public class MoneyOrderScreen extends javax.swing.JFrame implements IRegulator,IInfoController{
+    private MoneyOrder moneyOrderObject = null;
     private int moneyOrderAmount = 0;
     private final String Account_Number_Original = "Account Number";
     /**
@@ -30,15 +35,37 @@ public class MoneyOrderScreen extends javax.swing.JFrame implements IRegulator{
     @Override
     public void getEdits() {
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setFocusable(true);
         accountNumberText.setText(Account_Number_Original);
         TextSetting.setOnlyNumber(moneyOrderAmountText);
         TextSetting.setOnlyNumber(accountNumberText);
         TextSetting.setMaxLimit(moneyOrderAmountText, 5);
 //        TextSetting.setMaxLimit(accountNumberText,11);
+        this.userNameSurname.setText("Sayın " + getAccountInformation().getNameSurname());
+        this.balanceLabel2.setText(String.valueOf(getAccountInformation().getBalance()));
         
     }
 
+    @Override
+    public boolean validInformation() {
+        return !(this.moneyOrderAmountText.getText().equals("")
+                || this.accountNumberText.getText().equals(this.Account_Number_Original));
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        return AccountInformation.getInstance();
+    }
+
+    public MoneyOrder getMoneyOrderObject() {
+       if(this.moneyOrderObject == null) {
+            moneyOrderObject = new MoneyOrder();
+        }
+        return moneyOrderObject;
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,10 +257,32 @@ public class MoneyOrderScreen extends javax.swing.JFrame implements IRegulator{
     }//GEN-LAST:event_sendButtonMouseExited
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "Successfull\n" + " Amount : " + this.moneyOrderAmount + " TL");
-        ActionSetting.setVisible(this, new AccountScreen());
+         if(this.validInformation()) {
+            this.makeMoneyOrder();
+        } else {
+            Dialogs.notEmptyMessageShow(this);
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_sendButtonActionPerformed
-
+    
+     private void makeMoneyOrder() {
+        getMoneyOrderObject().setSendAmount(this.moneyOrderAmount);
+        getMoneyOrderObject().setRemittanceCreditPerson(this.accountNumberText.getText());
+        
+        if(getMoneyOrderObject().isMoneyOrder()) {
+            Dialogs.privateMessageShow(this, "The transfer has been successfully completed.\n"
+                    + "Sent account number:" + this.accountNumberText.getText()
+                    + "\nAmount Sent:" + this.moneyOrderAmount+ " TL");
+            ActionSetting.setVisible(this, new AccountScreen());
+        } else {
+            Dialogs.privateMessageShow(this, "Transfer could not be performed.\n"
+                    + "Please check your information!");
+        }
+    }
+     
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
         ButtonSetting.setBgFg(backButton, Color.CYAN, Color.blue);
     }//GEN-LAST:event_backButtonMouseEntered

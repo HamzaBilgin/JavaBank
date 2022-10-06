@@ -208,7 +208,7 @@
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="5">
-                <StringItem index="0" value="What is your pet&apos;s name?"/>
+                <StringItem index="0" value="What is your name of pet?"/>
                 <StringItem index="1" value="What is your favorite object?"/>
                 <StringItem index="2" value="What is the surname of your primary school teacher?"/>
                 <StringItem index="3" value="Where would you like to live?"/>

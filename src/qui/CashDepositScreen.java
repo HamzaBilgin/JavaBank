@@ -5,10 +5,14 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.CashDeposit;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -16,8 +20,8 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class CashDepositScreen extends javax.swing.JFrame implements IRegulator {
-
+public class CashDepositScreen extends javax.swing.JFrame implements IRegulator,IInfoController {
+    private CashDeposit cashDepositObject = null;
     private int cashDepositAmount = 0;
     
     public CashDepositScreen() {
@@ -28,11 +32,32 @@ public class CashDepositScreen extends javax.swing.JFrame implements IRegulator 
     @Override
     public void getEdits() {
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setFocusable(true);
         TextSetting.setOnlyNumber(cashDepositAmountText);
         TextSetting.setMaxLimit(cashDepositAmountText, 5);
+        this.userNameSurname.setText("Sayın " + getAccountInformation().getNameSurname());
+        this.balanceLabel2.setText(String.valueOf(getAccountInformation().getBalance()));
         
 
+    }
+
+    @Override
+    public boolean validInformation() {
+        return !(this.cashDepositAmountText.getText().equals(""));
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        return AccountInformation.getInstance();
+    }
+
+    public CashDeposit getCashDepositObject() {
+        if(this.cashDepositObject == null) {
+            cashDepositObject = new CashDeposit();
+        }
+        return cashDepositObject;
     }
 
     /**
@@ -202,10 +227,24 @@ public class CashDepositScreen extends javax.swing.JFrame implements IRegulator 
     }//GEN-LAST:event_cashDepositButtonMouseExited
 
     private void cashDepositButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashDepositButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "Successfull\n" + " Amount : " + this.cashDepositAmount + " TL");
-        ActionSetting.setVisible(this, new AccountScreen());
+        if(this.validInformation()) {
+            this.cashDraw();
+        } else {
+            Dialogs.notEmptyMessageShow(this);
+        }
+        
     }//GEN-LAST:event_cashDepositButtonActionPerformed
-
+    private void cashDraw() {
+        this.getCashDepositObject().setCashDepositAmount(this.cashDepositAmount);
+        
+        if(getCashDepositObject().isCashDeposit()) {
+            Dialogs.privateMessageShow(this, "Money has been successfully credited to your account.\n"
+                    + "Amount deposited:" + this.cashDepositAmount + " TL");
+            ActionSetting.setVisible(this, new AccountScreen());
+        } else {
+            Dialogs.privateMessageShow(this, "Check your information!");
+        }
+    }
     private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
         ButtonSetting.setBgFg(backButton, Color.CYAN, Color.blue);
     }//GEN-LAST:event_backButtonMouseEntered
@@ -217,7 +256,7 @@ public class CashDepositScreen extends javax.swing.JFrame implements IRegulator 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         ActionSetting.setVisible(this, new AccountScreen());
     }//GEN-LAST:event_backButtonActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */

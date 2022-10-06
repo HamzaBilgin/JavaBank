@@ -5,6 +5,8 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Action;
@@ -17,7 +19,7 @@ import qui.setting.IRegulator;
  *
  * @author hamza
  */
-public class AccountScreen extends javax.swing.JFrame implements IRegulator{
+public class AccountScreen extends javax.swing.JFrame implements IRegulator,IInfoController{
 
     /**
      * Creates new form AccountScreen
@@ -30,11 +32,25 @@ public class AccountScreen extends javax.swing.JFrame implements IRegulator{
     @Override
     public void getEdits() {
        this.setLocationRelativeTo(null);
+       this.setResizable(false);
+       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
        this.setFocusable(true);
+       this.userNameSurnameLabel.setText(getAccountInformation().getNameSurname());
+        this.userBalanceLabel.setText(String.valueOf(getAccountInformation().getBalance()));
     }
     /*
     button color
     */
+
+    @Override
+    public boolean validInformation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+       return AccountInformation.getInstance();
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

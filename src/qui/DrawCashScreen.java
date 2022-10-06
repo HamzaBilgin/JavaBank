@@ -5,10 +5,14 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.DrawCash;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 import qui.setting.TextSetting;
 
@@ -16,13 +20,14 @@ import qui.setting.TextSetting;
  *
  * @author hamza
  */
-public class DrawCashScreen extends javax.swing.JFrame implements IRegulator {
+public class DrawCashScreen extends javax.swing.JFrame implements IRegulator, IInfoController {
 
     /**
      * Creates new form DrawCashScreen
      */
+    private DrawCash drawCashObject = null;
     private int drawCashAmount = 0;
-    
+
     public DrawCashScreen() {
         initComponents();
         getEdits();
@@ -31,11 +36,31 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator {
     @Override
     public void getEdits() {
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setFocusable(true);
         TextSetting.setOnlyNumber(drawCashAmountText);
         TextSetting.setMaxLimit(drawCashAmountText, 4);
-        
-        
+        this.userNameSurname.setText("Sayın " + this.getAccountInformation().getNameSurname());
+        this.balanceLabel2.setText(String.valueOf(this.getAccountInformation().getBalance()));
+
+    }
+
+    @Override
+    public boolean validInformation() {
+        return !(this.drawCashAmountText.getText().equals(""));
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        return AccountInformation.getInstance();
+    }
+
+    public DrawCash getDrawCashObject() {
+        if (this.drawCashObject == null) {
+            drawCashObject = new DrawCash();
+        }
+        return drawCashObject;
     }
 
     /**
@@ -220,9 +245,24 @@ public class DrawCashScreen extends javax.swing.JFrame implements IRegulator {
     }//GEN-LAST:event_drawCashAmountTextKeyReleased
 
     private void drawCashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drawCashButtonActionPerformed
-        JOptionPane.showMessageDialog(this, "Successfull\n" + " Amount : " + this.drawCashAmount + " TL");
-        ActionSetting.setVisible(this, new AccountScreen());
+        if (this.validInformation()) {
+            this.drawCash();
+        } else {
+            Dialogs.notEmptyMessageShow(this);
+        }
+
     }//GEN-LAST:event_drawCashButtonActionPerformed
+    private void drawCash() {
+        this.getDrawCashObject().setDrawCashAmount(drawCashAmount);
+
+        if (getDrawCashObject().isDrawCash()) {
+            Dialogs.privateMessageShow(this, "Withdrawal completed.\n"
+                    + "Amount withdrawn:" + this.drawCashAmount + " TL");
+            ActionSetting.setVisible(this, new AccountScreen());
+        } else {
+            Dialogs.privateMessageShow(this, "Your balance is not enough!");
+        }
+    }
 
     /**
      * @param args the command line arguments

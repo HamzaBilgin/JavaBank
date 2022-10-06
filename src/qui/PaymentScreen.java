@@ -5,29 +5,56 @@
  */
 package qui;
 
+import database.IInfoController;
+import database.transactions.AccountInformation;
+import database.transactions.Payments;
 import java.awt.Color;
 import qui.setting.ActionSetting;
 import qui.setting.ButtonSetting;
+import qui.setting.Dialogs;
 import qui.setting.IRegulator;
 
 /**
  *
  * @author hamza
  */
-public class PaymentScreen extends javax.swing.JFrame implements IRegulator{
-
+public class PaymentScreen extends javax.swing.JFrame implements IRegulator,IInfoController{
+    private Payments paymentsObject = null;
     /**
      * Creates new form PaymentScreen
      */
     public PaymentScreen() {
         initComponents();
         getEdits();
+        
     }
 
     @Override
     public void getEdits() {
         this.setLocationRelativeTo(null);
         this.setFocusable(true);
+        this.userNameSurname.setText("Sayın " + getAccountInformation().getNameSurname());
+        this.electricDeptLabel.setText(String.valueOf(getAccountInformation().getElectricityBill()));
+        this.waterDeptLabel.setText(String.valueOf(getAccountInformation().getWaterBill()));
+        this.gasDeptLabel.setText(String.valueOf(getAccountInformation().getGasBill()));
+        this.internetDeptLabel.setText(String.valueOf(getAccountInformation().getInternetBill()));
+    }
+
+    @Override
+    public boolean validInformation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AccountInformation getAccountInformation() {
+        return AccountInformation.getInstance();
+    }
+
+    public Payments getPaymentsObject() {
+         if (this.paymentsObject == null) {
+            paymentsObject = new Payments();
+        }
+        return paymentsObject;
     }
     
 
@@ -329,21 +356,55 @@ public class PaymentScreen extends javax.swing.JFrame implements IRegulator{
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void payElectricityBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payElectricityBillButtonActionPerformed
-        ActionSetting.setVisible(this, new AccountScreen());
+       double billAmount = Double.valueOf(this.electricDeptLabel.getText());
+        if (this.billPrepaid(billAmount)) {
+            Dialogs.privateMessageShow(this, "Electric bill already paid!");
+        } else {
+            this.payBill("elektrik", billAmount);
+        }
     }//GEN-LAST:event_payElectricityBillButtonActionPerformed
 
     private void payWaterBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payWaterBillButtonActionPerformed
-       ActionSetting.setVisible(this, new AccountScreen());
+       double billAmount = Double.valueOf(this.waterDeptLabel.getText());
+        if (this.billPrepaid(billAmount)) {
+            Dialogs.privateMessageShow(this, "Water bill already paid!");
+        } else {
+            this.payBill("su", billAmount);
+        }
     }//GEN-LAST:event_payWaterBillButtonActionPerformed
 
     private void payGasBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payGasBillButtonActionPerformed
-        ActionSetting.setVisible(this, new AccountScreen());
+        double billAmount = Double.valueOf(this.gasDeptLabel.getText());
+        if (this.billPrepaid(billAmount)) {
+            Dialogs.privateMessageShow(this, "Gas bill already paid!");
+        } else {
+            this.payBill("dogalgaz", billAmount);
+        }
     }//GEN-LAST:event_payGasBillButtonActionPerformed
 
     private void payInternetBillButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payInternetBillButtonActionPerformed
-        ActionSetting.setVisible(this, new AccountScreen());
+        double billAmount = Double.valueOf(this.internetDeptLabel.getText());
+        if (this.billPrepaid(billAmount)) {
+            Dialogs.privateMessageShow(this, "Internet bill already paid!");
+        } else {
+            this.payBill("internet", billAmount);
+        }
     }//GEN-LAST:event_payInternetBillButtonActionPerformed
+    private boolean billPrepaid(double paymentAmount) {
+        return paymentAmount == 0.0;
+    }
 
+    private void payBill(String billName, double billAmount) {
+        this.getPaymentsObject().setBillName(billName);
+        this.getPaymentsObject().setBillAmount(billAmount);
+
+        if (getPaymentsObject().isTheBillPaid()) {
+            Dialogs.privateMessageShow(this, "Your invoice has been successfully paid.");
+             ActionSetting.setVisible(this, new AccountScreen());
+        } else {
+            Dialogs.privateMessageShow(this, "Payment transaction failed!");
+        }
+    }
     /**
      * @param args the command line arguments
      */
